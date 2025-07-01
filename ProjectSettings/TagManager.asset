@@ -12,7 +12,7 @@ TagManager:
   - Water
   - UI
   - game objects
-  - 
+  - play area
   - 
   - 
   - 
@@ -40,6 +40,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: playingField
+    uniqueID: 537154833
+    locked: 0
+  - name: fieldObjects
+    uniqueID: 4123697967
     locked: 0
   - name: player
     uniqueID: 1447156323
