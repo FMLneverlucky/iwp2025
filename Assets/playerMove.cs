@@ -19,9 +19,9 @@ public class playerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Direction = InputSystem.actions.FindAction("Move").ReadValue<float>();
-        Debug.Log(Direction);
-        rb.AddForce((Pos.x + Direction), 0);
-        transform.position.x + Direction;//only moving in one axis and direction value on changes when -1 or 1
+        //Direction = InputSystem.actions.FindAction("Move").ReadValue<float>();
+        //Debug.Log(Direction);
+        //rb.AddForce((Pos.x + Direction), 0);
+        //transform.position.x + Direction;//only moving in one axis and direction value on changes when -1 or 1
     }
 }
