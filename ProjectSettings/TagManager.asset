@@ -44,11 +44,11 @@ TagManager:
   - name: playingField
     uniqueID: 537154833
     locked: 0
-  - name: fieldObjects
-    uniqueID: 4123697967
-    locked: 0
   - name: player
     uniqueID: 1447156323
+    locked: 0
+  - name: fieldObjects
+    uniqueID: 4123697967
     locked: 0
   m_RenderingLayers:
   - Default

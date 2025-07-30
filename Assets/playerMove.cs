@@ -1,27 +1,53 @@
 using Unity.VisualScripting;
+using UnityEditor;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Processors;
+
 
 public class playerMove : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private Vector2 Pos;
-    private float Direction;
+    //private float hDirection, vDirection = 0;
+    private Vector2 Direction = new Vector2(0, 0);
+    private InputAction shooting, moving;
+    private BulletManager bulManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        Pos = rb.transform.position;
-        Direction = .0f;
-        Debug.Log(Direction.ToString());
+        shooting = InputSystem.actions.FindAction("shoot");
+        moving = InputSystem.actions.FindAction("Move");
+        bulManager = BulletManager.GetManagerInstance();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Direction = InputSystem.actions.FindAction("Move").ReadValue<float>();
-        //Debug.Log(Direction);
-        //rb.AddForce((Pos.x + Direction), 0);
-        //transform.position.x + Direction;//only moving in one axis and direction value on changes when -1 or 1
+        if (shooting.IsPressed())
+        {
+            bulManager.CreateBullet();
+        }
+        bulManager.Update();
+
+        if (moving.WasPressedThisFrame())
+        {
+            rb.simulated = true;
+            Direction = InputSystem.actions.FindAction("Move").ReadValue<Vector2>();
+            Debug.Log(Direction);
+            rb.linearVelocity = Direction * 4;
+            var pos = transform.position;
+            pos.x = Mathf.Clamp(transform.position.x, -(Camera.main.pixelWidth), Camera.main.pixelWidth);
+            pos.y = Mathf.Clamp(transform.position.y, -(Camera.main.pixelHeight), Camera.main.pixelHeight);
+            transform.position = pos;
+            return;
+        }
+
+        if (moving.WasPerformedThisDynamicUpdate())
+        {
+            rb.simulated = false;
+        }
+
     }
 }
