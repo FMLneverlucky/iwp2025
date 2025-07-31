@@ -38,8 +38,11 @@ public class playerMove : MonoBehaviour
             Debug.Log(Direction);
             rb.linearVelocity = Direction * 4;
             var pos = transform.position;
-            pos.x = Mathf.Clamp(transform.position.x, -(Camera.main.pixelWidth), Camera.main.pixelWidth);
-            pos.y = Mathf.Clamp(transform.position.y, -(Camera.main.pixelHeight), Camera.main.pixelHeight);
+            Bounds playarea_bounds = GameObject.Find("background").GetComponent<SpriteRenderer>().bounds;
+            Bounds playerBounds = gameObject.GetComponent<SpriteRenderer>().bounds;
+
+            pos.x = Mathf.Clamp(transform.position.x, playarea_bounds.min.x + playerBounds.extents.x, playarea_bounds.max.x - playerBounds.extents.x);    //since player pos would be center of sprite and using background boundary, want to shrink the limits where center of player can go
+            pos.y = Mathf.Clamp(transform.position.y, playarea_bounds.min.y + playerBounds.extents.y, playarea_bounds.max.y - playerBounds.extents.y);
             transform.position = pos;
             return;
         }
